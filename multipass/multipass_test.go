@@ -8,6 +8,7 @@ import (
 func TestCreateInfoAndDelete(t *testing.T) {
 	instance, err := Launch(&LaunchReq{
 		CPU:           2,
+		Name: "test2",
 	})
 	if err != nil {
 		t.Fatal(err)
