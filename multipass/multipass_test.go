@@ -14,6 +14,15 @@ func TestCreateInfoAndDelete(t *testing.T) {
 	}
 
 	t.Log("created instance "+instance.IP)
+
+	instanceInfo, err := Info(&InfoRequest{Name:instance.Name})
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	t.Log("instance information "+instanceInfo.Name)
+	t.Log("instance information "+instanceInfo.IP)
+
 	t.Log("now deleting "+instance.Name)
 
 	if err := Delete(&DeleteRequest{Name:instance.Name}); err != nil {
