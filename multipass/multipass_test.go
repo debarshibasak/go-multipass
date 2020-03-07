@@ -24,11 +24,17 @@ func TestCreateInfoAndDelete(t *testing.T) {
 	t.Log("instance information "+instanceInfo.Name)
 	t.Log("instance information "+instanceInfo.IP)
 
+	err = Exec(&ExecRequest{Name:instanceInfo.Name, Command:"ls"})
+	if err != nil {
+		t.Fatal(err)
+	}
+
 	t.Log("now deleting "+instance.Name)
 
 	if err := Delete(&DeleteRequest{Name:instance.Name}); err != nil {
 		t.Fatal(err)
 	}
+
 }
 
 func TestParsing(t *testing.T) {

@@ -1,6 +1,7 @@
 package multipass
 
 import (
+	"github.com/pkg/errors"
 	"log"
 	"os/exec"
 )
@@ -11,6 +12,10 @@ type ExecRequest struct {
 }
 
 func Exec(req *ExecRequest) error {
+
+	if req.Command == "" {
+		return errors.New("command cannot be empty")
+	}
 
 	cmdString := "multipass exec "+req.Name+" -- "+req.Command
 
