@@ -4,30 +4,30 @@ Golang client SDK to interact with canonical's multipass.
 
 #### To launch an instance
 ```
-	instance, err := multipass.Launch(&multipass.LaunchReq{
-		CPU:           2,
-        Name: "instanceName", 
-	})
-	if err != nil {
-		t.Fatal(err)
-	}
+instance, err := multipass.Launch(&multipass.LaunchReq{
+    CPU:           2,
+    Name: "instanceName", 
+})
+if err != nil {
+    t.Fatal(err)
+}
 ```
 
 #### To delete an instance
 
 ```
-	if err := multipass.Delete(&multipass.DeleteRequest{Name:instance.Name}); err != nil {
-		t.Fatal(err)
-	}
+if err := multipass.Delete(&multipass.DeleteRequest{Name:instance.Name}); err != nil {
+    t.Fatal(err)
+}
 ```
 
 #### To get information an instance
 
 ```
-	instanceInfo, err := Info(&InfoRequest{Name:instance.Name})
-	if err != nil {
-		t.Fatal(err)
-	}
+instanceInfo, err := Info(&InfoRequest{Name:instance.Name})
+if err != nil {
+    t.Fatal(err)
+}
 ```
 
 #### Roadmap
