@@ -24,10 +24,21 @@ if err := multipass.Delete(&multipass.DeleteRequest{Name:instance.Name}); err !=
 #### To get information an instance
 
 ```
-instanceInfo, err := Info(&InfoRequest{Name:instance.Name})
+instanceInfo, err := multipass.Info(&multipass.InfoRequest{Name:instance.Name})
 if err != nil {
     t.Fatal(err)
 }
+```
+
+
+#### To execute remote commands
+
+```
+err = multipass.Exec(&multipass.ExecRequest{Name:instanceInfo.Name, Command:"ls"})
+if err != nil {
+    t.Fatal(err)
+}
+
 ```
 
 #### Roadmap
