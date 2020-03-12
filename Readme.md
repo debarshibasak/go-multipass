@@ -6,6 +6,7 @@ Golang client SDK to interact with canonical's multipass.
 ```
 	instance, err := multipass.Launch(&multipass.LaunchReq{
 		CPU:           2,
+        Name: "instanceName", 
 	})
 	if err != nil {
 		t.Fatal(err)
