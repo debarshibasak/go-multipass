@@ -1,13 +1,13 @@
 package multipass
 
 import (
-	"github.com/pkg/errors"
+	"errors"
 	"log"
 	"os/exec"
 )
 
 type ExecRequest struct {
-	Name string
+	Name    string
 	Command string
 }
 
@@ -17,7 +17,7 @@ func Exec(req *ExecRequest) error {
 		return errors.New("command cannot be empty")
 	}
 
-	cmdString := "multipass exec "+req.Name+" -- "+req.Command
+	cmdString := "multipass exec " + req.Name + " -- " + req.Command
 
 	cmd := exec.Command("sh", "-c", cmdString)
 
