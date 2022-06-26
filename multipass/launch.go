@@ -7,16 +7,21 @@ import (
 )
 
 type LaunchReq struct {
-	CPU int
-	Disk string
-	Name string
-	Memory string
+	Image         string
+	CPU           int
+	Disk          string
+	Name          string
+	Memory        string
 	CloudInitFile string
 }
 
 func Launch(launchReq *LaunchReq) (*Instance, error) {
 
 	var args = ""
+
+	if launchReq.Image != "" {
+		args = args + fmt.Sprintf(" %v", launchReq.Image)
+	}
 
 	if launchReq.CPU != 0 {
 		args = args + fmt.Sprintf(" --cpus %v", launchReq.CPU)
@@ -38,7 +43,7 @@ func Launch(launchReq *LaunchReq) (*Instance, error) {
 		args = args + fmt.Sprintf(" --cloud-init %v", launchReq.CloudInitFile)
 	}
 
-	cmd := fmt.Sprintf("multipass launch "+args)
+	cmd := fmt.Sprintf("multipass launch " + args)
 
 	cmdExec := exec.Command("sh", "-c", cmd)
 	out, err := cmdExec.CombinedOutput()
@@ -56,7 +61,7 @@ func Launch(launchReq *LaunchReq) (*Instance, error) {
 
 	name := strings.TrimSpace(strings.Split(o, "Launched: ")[1])
 
-	instance, err := Info(&InfoRequest{Name:name})
+	instance, err := Info(&InfoRequest{Name: name})
 	if err != nil {
 		return nil, err
 	}

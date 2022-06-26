@@ -27,7 +27,8 @@ func DeleteAll() error {
 
 func Delete(req *DeleteRequest) error {
 
-	cmd := fmt.Sprintf("multipass delete -p "+req.Name)
+	// --purge: Purge instances immediately
+	cmd := fmt.Sprintf("multipass delete --purge " + req.Name)
 
 	cmdExec := exec.Command("sh", "-c", cmd)
 
