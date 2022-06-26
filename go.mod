@@ -1,3 +1,3 @@
-module github.com/debarshibasak/go-multipass
+module github.com/larstobi/go-multipass
 
 go 1.12
