@@ -1,14 +1,14 @@
 package multipass
 
 import (
-	"fmt"
+	"errors"
 	"os/exec"
 	"strings"
 )
 
 type LaunchReq struct {
 	Image         string
-	CPU           int
+	CPUS          string
 	Disk          string
 	Name          string
 	Memory        string
@@ -16,40 +16,36 @@ type LaunchReq struct {
 }
 
 func Launch(launchReq *LaunchReq) (*Instance, error) {
-
-	var args = ""
+	var args = []string{"launch"}
 
 	if launchReq.Image != "" {
-		args = args + fmt.Sprintf(" %v", launchReq.Image)
+		args = append(args, launchReq.Image)
 	}
 
-	if launchReq.CPU != 0 {
-		args = args + fmt.Sprintf(" --cpus %v", launchReq.CPU)
+	if launchReq.CPUS != "" {
+		args = append(args, "--cpus", launchReq.CPUS)
 	}
 
 	if launchReq.Name != "" {
-		args = args + fmt.Sprintf(" --name %v", launchReq.Name)
+		args = append(args, "--name", launchReq.Name)
 	}
 
 	if launchReq.Disk != "" {
-		args = args + fmt.Sprintf(" --disk %v", launchReq.Disk)
+		args = append(args, "--disk", launchReq.Disk)
 	}
 
 	if launchReq.Memory != "" {
-		args = args + fmt.Sprintf(" --mem %v", launchReq.Memory)
+		args = append(args, "--mem", launchReq.Memory)
 	}
 
 	if launchReq.CloudInitFile != "" {
-		args = args + fmt.Sprintf(" --cloud-init %v", launchReq.CloudInitFile)
+		args = append(args, "--cloud-init", launchReq.CloudInitFile)
 	}
 
-	cmd := fmt.Sprintf("multipass launch " + args)
-
-	cmdExec := exec.Command("sh", "-c", cmd)
-	out, err := cmdExec.CombinedOutput()
+	result := exec.Command("multipass", args...)
+	out, err := result.CombinedOutput()
 	if err != nil {
-		fmt.Println(string(out))
-		return nil, err
+		return nil, errors.New(string(out) + " " + err.Error())
 	}
 
 	var b []byte

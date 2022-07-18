@@ -10,7 +10,7 @@ type InfoRequest struct {
 
 func Info(req *InfoRequest) (*Instance, error) {
 
-	cmdFormat := "multipass info "+ req.Name
+	cmdFormat := "multipass info " + req.Name
 
 	cmdExec := exec.Command("sh", "-c", cmdFormat)
 
